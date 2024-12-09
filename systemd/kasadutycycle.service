@@ -1,0 +1,16 @@
+# Example systemd unit file for kasadutycycle; customize as needed.
+
+[Unit]
+Description=Kasa Plug Dutycycle Exporter
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/kasadutycycle -interval=10s -targets=192.168.1.123 -targets=192.168.1.124 -checkpoint-file=${STATE_DIRECTORY}/checkpoint.json -http-listen-address=localhost:9385
+Restart=on-failure
+Type=simple
+DynamicUser=yes
+StateDirectory=kasadutycycle
+
+[Install]
+WantedBy=multi-user.target
+Alias=kasadutycycle.service
